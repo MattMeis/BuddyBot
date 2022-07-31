@@ -26,4 +26,3 @@ client
 		loadCommands(client);
 	})
 	.catch((err) => console.log(err));
-

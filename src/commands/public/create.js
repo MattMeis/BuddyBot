@@ -7,6 +7,14 @@ module.exports = {
 	developer: false,
 	async execute(interaction) {
 		await interaction.reply({ content: 'Party time 😎', ephermal: true });
+
+		const client = interaction.client;
+		const creator = client.users.cache.get(interaction.member.user.id);
+
+		creator.send('Let\'s get this party started.....');
+
+		client.on;
+
 	},
 
 

@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+
 const { Client, GatewayIntentBits, Partials, Collection } = require ('discord.js');
 const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
@@ -15,8 +16,7 @@ const client = new Client(
 		partials:[User, Message, GuildMember, ThreadMember],
 	});
 
-client.commands	= new Collection();
-
+// Driver function
 client
 	.login(process.env.DISCORDJS_BOT_TOKEN)
 	.then(() => {
@@ -25,23 +25,22 @@ client
 	})
 	.catch((err) => console.log(err));
 
-// Subscribe Command Handling
+// Loads interactions from commands
+
+client.commands	= new Collection();
+
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 
-	if (interaction.commandName === 'subscribe') {
-		await interaction.reply('You are now subscribed to BuddyBot, welcome to the club!');
+	const command = client.commands.get(interaction.commandName);
+
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
 	}
-
-});
-
-// Unsubscribe Command Handling
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isChatInputCommand()) return;
-
-	if (interaction.commandName === 'unsubscribe') {
-		await interaction.reply('You are now unsubscribed from BuddyBot, was it something I said?');
+	catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
-
 });
-

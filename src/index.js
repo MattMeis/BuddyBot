@@ -16,6 +16,8 @@ const client = new Client(
 		partials:[User, Message, GuildMember, ThreadMember],
 	});
 
+client.commands	= new Collection();
+
 // Driver function
 client
 	.login(process.env.DISCORDJS_BOT_TOKEN)
@@ -25,22 +27,3 @@ client
 	})
 	.catch((err) => console.log(err));
 
-// Loads interactions from commands
-
-client.commands	= new Collection();
-
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isChatInputCommand()) return;
-
-	const command = client.commands.get(interaction.commandName);
-
-	if (!command) return;
-
-	try {
-		await command.execute(interaction);
-	}
-	catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
-});

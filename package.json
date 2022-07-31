@@ -5,15 +5,17 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "node ./src/deploy-command.js",
-    "start": "node ./src/bot.js",
-    "dev": "nodemon ./src/bot.js"
+    "init": "node ./src/init.js",
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^1.0.0",
+    "ascii-table": "^0.0.9",
+    "dayjs": "^1.11.4",
     "discord.js": "^14.0.3",
     "dotenv": "^16.0.1"
   }
